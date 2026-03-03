@@ -20,7 +20,7 @@ class AppController extends GetxController {
 
   Future<void> _routeTo() async {
     if (FirebaseAuth.instance.currentUser != null) {
-      Get.offAllNamed(AppRoutes.home);
+      Get.offAllNamed(AppRoutes.base);
     } else {
       Get.offAllNamed(AppRoutes.login);
     }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat/app/controllers/auth_controller.dart';
 import 'package:real_time_chat/app/data/models/chat_contact.dart';
+import 'package:real_time_chat/app/services/extensions/context.dart';
+import 'package:real_time_chat/app/ui/widgets/app_scaffold.dart';
 import 'package:real_time_chat/app/utils/helpers/getItHook/getit_hook.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -32,12 +34,12 @@ class _HomeScreenState extends GetItHookState<AuthController, HomeScreen> {
   Widget build(BuildContext context) {
     final theme = ShadTheme.of(context);
 
-    return Scaffold(
+    return AppScaffold(
       backgroundColor: const Color(0xFF0A0A0F),
-      body: SafeArea(
+      titleWidget: _buildTopBar(theme),
+      body: (context) => SafeArea(
         child: Column(
           children: [
-            _buildTopBar(theme),
             _buildSearchBar(theme),
             _buildStoriesRow(theme),
             _buildSectionHeader(theme),
@@ -45,39 +47,61 @@ class _HomeScreenState extends GetItHookState<AuthController, HomeScreen> {
           ],
         ),
       ),
-      bottomNavigationBar: _buildBottomNav(theme),
+      // bottomNavigationBar: _buildBottomNav(theme),
       floatingActionButton: _buildFAB(theme),
     );
   }
 
   // ── Top Bar ──────────────────────────────────
   Widget _buildTopBar(ShadThemeData theme) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 16, 16, 8),
-      child: Row(
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Messages',
-                style: theme.textTheme.h2.copyWith(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -0.8),
-              ),
-              Text(
-                '${chatsData.where((c) => c.unreadCount > 0).length} unread',
-                style: theme.textTheme.muted.copyWith(color: const Color(0xFF6366F1), fontSize: 13, fontWeight: FontWeight.w500),
-              ),
-            ],
-          ),
-          const Spacer(),
-          _buildMyAvatar(),
-        ],
-      ),
+    return Row(
+      children: [
+        Column(
+          mainAxisSize: .min,
+          crossAxisAlignment: .start,
+          children: [
+            Text(
+              'Messages',
+              style: theme.textTheme.h2.copyWith(color: Colors.white, fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -0.8),
+            ),
+            Text(
+              '${chatsData.where((c) => c.unreadCount > 0).length} unread',
+              style: theme.textTheme.muted.copyWith(color: const Color(0xFF6366F1), fontSize: 13, fontWeight: FontWeight.w500),
+            ),
+          ],
+        ),
+        const Spacer(),
+        _buildMyAvatar(),
+      ],
     );
   }
 
   Widget _buildMyAvatar() {
-    return ShadPopover(
+    final popoverCtrl = ShadPopoverController();
+    return
+    // SizedBox(
+    //   width: 44,
+    //   height: 44,
+    //   child: ShadPopover(
+    //     controller: popoverCtrl,
+    //     child: ShadButton.outline(child: Text("Click me! 📌")),
+    //     popover: (context) => Padding(
+    //       padding: const EdgeInsets.all(16),
+    //       child: Column(
+    //         mainAxisSize: MainAxisSize.min,
+    //         crossAxisAlignment: CrossAxisAlignment.start,
+    //         children: [
+    //           Text("Hello! 👋", style: ShadTheme.of(context).textTheme.h4),
+    //           const SizedBox(height: 8),
+    //           Text("This is your popover content."),
+    //         ],
+    //       ),
+    //     ),
+    //   ),
+    // );
+    ShadPopover(
+      controller: popoverCtrl,
+
       popover: (context) => Container(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -180,7 +204,7 @@ class _HomeScreenState extends GetItHookState<AuthController, HomeScreen> {
   // ── Stories Row ──────────────────────────────
   Widget _buildStoriesRow(ShadThemeData theme) {
     return SizedBox(
-      height: 90,
+      height: 100,
       child: ListView.builder(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         scrollDirection: Axis.horizontal,
@@ -299,7 +323,7 @@ class _HomeScreenState extends GetItHookState<AuthController, HomeScreen> {
                       AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                        decoration: BoxDecoration(color: isSelected ? const Color(0xFF6366F1).withOpacity(0.12) : Colors.transparent, borderRadius: BorderRadius.circular(12)),
+                        decoration: BoxDecoration(color: isSelected ? const Color(0xFF6366F1).changeOpacity(0.12) : Colors.transparent, borderRadius: BorderRadius.circular(12)),
                         child: Icon(isSelected ? item.$1 : item.$2, color: isSelected ? const Color(0xFF6366F1) : const Color(0xFF4B4B6A), size: 22),
                       ),
                     ],
