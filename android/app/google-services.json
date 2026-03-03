@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "410894269633",
+    "project_id": "vastavik-samayma-chat",
+    "storage_bucket": "vastavik-samayma-chat.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:410894269633:android:8b6ab52fc0e3bdc277e840",
+        "android_client_info": {
+          "package_name": "com.example.real_time_chat"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCZIZpjSJ0HKrh0YQENX_Dkji1Xv7jFgd0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
