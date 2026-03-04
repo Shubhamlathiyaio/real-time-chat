@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:real_time_chat/app/controllers/chat_controller.dart';
 import 'package:real_time_chat/app/data/models/chat_contact.dart';
 import 'package:real_time_chat/app/data/services/chat_service.dart';
+import 'package:real_time_chat/app/routes/app_routes.dart';
 import 'package:real_time_chat/app/ui/widgets/app_scaffold.dart';
 import 'package:real_time_chat/app/utils/helpers/getItHook/getit_hook.dart';
 import 'package:real_time_chat/app/utils/helpers/injectable/injectable.dart';
@@ -59,7 +60,7 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
               style: theme.textTheme.h2.copyWith(color: KColors.white, fontSize: 28, fontWeight: FontWeight.w800, letterSpacing: -0.8),
             ),
             Text(
-              '${chatsData.where((c) => c.unreadCount > 0).length} unread',
+              'Active chats',
               style: theme.textTheme.muted.copyWith(color: KColors.primary, fontSize: 13, fontWeight: FontWeight.w500),
             ),
           ],
@@ -202,7 +203,7 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
           ),
           const Spacer(),
           ShadButton.ghost(
-            onPressed: () {},
+            onPressed: () => Get.toNamed(AppRoutes.users),
             size: ShadButtonSize.sm,
             child: const Text(
               'See all',
@@ -228,7 +229,7 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(16),
-          onTap: () {},
+          onTap: () => Get.toNamed(AppRoutes.users),
           child: const Icon(Icons.edit_rounded, color: Colors.white, size: 22),
         ),
       ),

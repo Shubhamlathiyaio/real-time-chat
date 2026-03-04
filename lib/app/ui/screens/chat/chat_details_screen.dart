@@ -1,15 +1,15 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/controllers/chat_details_controller.dart';
 import 'package:real_time_chat/app/data/models/message.dart';
 import 'package:real_time_chat/app/utils/theme/app_colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatDetailsScreen extends GetView<ChatDetailsController> {
   const ChatDetailsScreen({super.key});
 
-  String get _currentUid => FirebaseAuth.instance.currentUser?.uid ?? 'current_user_id';
+  String get _currentUid => Supabase.instance.client.auth.currentUser?.id ?? 'current_user_id';
 
   @override
   Widget build(BuildContext context) {

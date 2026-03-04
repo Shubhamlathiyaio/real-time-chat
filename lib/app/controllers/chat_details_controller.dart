@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/data/models/message.dart';
 import 'package:real_time_chat/app/data/services/chat_service.dart';
 import 'package:real_time_chat/app/utils/helpers/injectable/injectable.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ChatDetailsController extends GetxController {
   final String otherUid;
@@ -23,7 +23,7 @@ class ChatDetailsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    final currentUid = FirebaseAuth.instance.currentUser?.uid ?? 'current_user_id';
+    final currentUid = Supabase.instance.client.auth.currentUser?.id ?? 'current_user_id';
     messages.bindStream(_chatService.getMessages(currentUid, otherUid));
 
     textCtrl.addListener(() {

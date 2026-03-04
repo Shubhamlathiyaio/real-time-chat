@@ -14,7 +14,11 @@ void configureServices({required Widget myApp}) {
 
 Future<void> _init(Widget myApp) async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Supabase.initialize(url: 'https://mojjxzmkygraysviphjw.supabase.co', anonKey: 'sb_publishable_6Hshl4MCfUeIBrhjj3mI2A_GhRUKYli');
+  await Supabase.initialize(
+    url: 'https://mojjxzmkygraysviphjw.supabase.co',
+    anonKey:
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1vamp4em1reWdyYXlzdmlwaGp3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI1NTkxMDQsImV4cCI6MjA4ODEzNTEwNH0.lTzL6vgg3r-vKrMUgd13MlOKy0mwsmWHew46FxBE2ag',
+  );
   getIt.init();
   runApp(myApp);
 }

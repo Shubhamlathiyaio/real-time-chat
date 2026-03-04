@@ -1,9 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/controllers/profile_controller.dart';
 import 'package:real_time_chat/app/utils/helpers/extensions/context.dart';
 import 'package:real_time_chat/app/utils/theme/app_colors.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -85,8 +85,8 @@ class ProfilePage extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 48,
                       backgroundColor: KColors.primary,
-                      backgroundImage: ctrl.user?.photoURL != null ? NetworkImage(ctrl.user!.photoURL!) : null,
-                      child: ctrl.user?.photoURL == null
+                      backgroundImage: ctrl.user?.userMetadata?['avatar_url'] != null ? NetworkImage(ctrl.user!.userMetadata!['avatar_url']) : null,
+                      child: ctrl.user?.userMetadata?['avatar_url'] == null
                           ? Text(
                               ctrl.initials,
                               style: const TextStyle(color: KColors.white, fontWeight: FontWeight.w800, fontSize: 28),
@@ -120,16 +120,14 @@ class ProfilePage extends StatelessWidget {
           const SizedBox(height: 16),
 
           // Name
-          Obx(
-            () => Text(
-              ctrl.displayName.value,
-              style: const TextStyle(color: KColors.white, fontSize: 22, fontWeight: FontWeight.w800, letterSpacing: -0.6),
-            ),
+          Text(
+            ctrl.displayName,
+            style: const TextStyle(color: KColors.white, fontSize: 22, fontWeight: FontWeight.w800, letterSpacing: -0.6),
           ),
           const SizedBox(height: 4),
 
           // Email
-          Obx(() => Text(ctrl.email.value, style: const TextStyle(color: KColors.muted, fontSize: 14))),
+          Text(ctrl.email, style: const TextStyle(color: KColors.muted, fontSize: 14)),
 
           const SizedBox(height: 16),
 
@@ -169,16 +167,20 @@ class ProfilePage extends StatelessWidget {
       child: _Card(
         child: Column(
           children: [
-            Obx(() => _InfoRow(icon: Icons.email_rounded, label: 'Email', value: ctrl.email.value)),
+            _InfoRow(icon: Icons.email_rounded, label: 'Email', value: ctrl.email),
             const _Divider(),
             _InfoRow(
               icon: Icons.verified_user_rounded,
               label: 'Account',
-              value: FirebaseAuth.instance.currentUser?.emailVerified == true ? 'Verified' : 'Unverified',
-              valueColor: FirebaseAuth.instance.currentUser?.emailVerified == true ? KColors.accent : KColors.orange,
+              value: Supabase.instance.client.auth.currentUser?.emailConfirmedAt != null ? 'Verified' : 'Unverified',
+              valueColor: Supabase.instance.client.auth.currentUser?.emailConfirmedAt != null ? KColors.accent : KColors.orange,
             ),
             const _Divider(),
-            _InfoRow(icon: Icons.calendar_today_rounded, label: 'Joined', value: _formatDate(FirebaseAuth.instance.currentUser?.metadata.creationTime)),
+            _InfoRow(
+              icon: Icons.calendar_today_rounded,
+              label: 'Joined',
+              value: _formatDate(Supabase.instance.client.auth.currentUser?.createdAt != null ? DateTime.parse(Supabase.instance.client.auth.currentUser!.createdAt) : null),
+            ),
           ],
         ),
       ),
@@ -306,7 +308,7 @@ class ProfilePage extends StatelessWidget {
                     child: GestureDetector(
                       onTap: () {
                         Get.back();
-                        ctrl.logout(); 
+                        ctrl.logout();
                       },
                       child: Container(
                         height: 46,
