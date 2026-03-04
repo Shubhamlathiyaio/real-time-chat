@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:real_time_chat/app/routes/app_routes.dart';
+import 'package:real_time_chat/app/utils/helpers/extensions/context.dart';
 
 import '../../../../data/models/chat_contact.dart';
 import 'typing_indicator.dart';
@@ -12,9 +15,20 @@ class ChatTile extends StatelessWidget {
     return Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: () {},
-        splashColor: const Color(0xFF6366F1).withOpacity(0.06),
-        highlightColor: const Color(0xFF6366F1).withOpacity(0.03),
+        onTap: () {
+          Get.toNamed(
+            AppRoutes.chatDetails,
+            arguments: {
+              'otherUid': contact.id,
+              'otherName': contact.name,
+              'otherAvatarUrl': null, // Map this if available
+              'avatarColor': contact.avatarColor,
+              'isGroup': false,
+            },
+          );
+        },
+        splashColor: const Color(0xFF6366F1).changeOpacity(0.06),
+        highlightColor: const Color(0xFF6366F1).changeOpacity(0.03),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
           child: Row(
@@ -38,7 +52,7 @@ class ChatTile extends StatelessWidget {
       children: [
         CircleAvatar(
           radius: 27,
-          backgroundColor: contact.avatarColor.withOpacity(0.15),
+          backgroundColor: contact.avatarColor.changeOpacity(0.15),
           child: CircleAvatar(
             radius: 25,
             backgroundColor: contact.avatarColor,

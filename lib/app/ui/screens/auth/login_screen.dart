@@ -2,7 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/controllers/auth_controller.dart';
-import 'package:real_time_chat/app/services/auth_service.dart';
+import 'package:real_time_chat/app/data/services/auth_service.dart';
+import 'package:real_time_chat/app/routes/app_routes.dart';
 import 'package:real_time_chat/app/utils/helpers/getItHook/getit_hook.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
@@ -41,7 +42,7 @@ class _LoginScreenState extends GetItHookState<AuthController, LoginScreen> {
     setState(() => _isLoading = false);
 
     if (user != null) {
-      Get.toNamed('/home');
+      Get.offAllNamed(AppRoutes.base);
     } else {
       ShadToaster(
         child: ShadToast.destructive(title: Text('Login Failed'), description: Text('Invalid credentials. Please try again.')),

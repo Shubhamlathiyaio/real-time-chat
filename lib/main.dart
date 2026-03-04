@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ShadApp(
+      debugShowCheckedModeBanner: false,
       theme: ShadThemeData(brightness: Brightness.light, colorScheme: const ShadSlateColorScheme.light()),
       darkTheme: ShadThemeData(brightness: Brightness.dark, colorScheme: const ShadSlateColorScheme.dark()),
       home: GetMaterialApp(debugShowCheckedModeBanner: false, title: _kAppName, getPages: AppPages.routes, initialRoute: AppRoutes.splash),

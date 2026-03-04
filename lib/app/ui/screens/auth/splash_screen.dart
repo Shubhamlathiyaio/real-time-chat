@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:real_time_chat/app/controllers/app_controller.dart';
+import 'package:real_time_chat/app/utils/helpers/extensions/context.dart';
 import 'package:real_time_chat/app/utils/helpers/injectable/injectable.dart';
+import 'package:real_time_chat/app/utils/theme/app_colors.dart';
+import 'package:real_time_chat/app/utils/theme/app_system_ui_overlay_style.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -78,81 +81,83 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
     final theme = ShadTheme.of(context);
     final isDark = theme.brightness == Brightness.dark;
 
-    return Scaffold(
-      body: AnimatedBuilder(
-        animation: _bgAnim,
-        builder: (context, child) {
-          return Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-                colors: isDark
-                    ? [Color.lerp(const Color(0xFF0F0F0F), const Color(0xFF1A1A2E), _bgAnim.value)!, Color.lerp(const Color(0xFF1A1A2E), const Color(0xFF16213E), _bgAnim.value)!]
-                    : [Color.lerp(const Color(0xFFFAFAFA), const Color(0xFFF0F4FF), _bgAnim.value)!, Color.lerp(const Color(0xFFEEF2FF), const Color(0xFFFAFAFA), _bgAnim.value)!],
+    return SplashSystemUiOverlayStyle(
+      child: Scaffold(
+        body: AnimatedBuilder(
+          animation: _bgAnim,
+          builder: (context, child) {
+            return Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topLeft,
+                  end: Alignment.bottomRight,
+                  colors: isDark
+                      ? [Color.lerp(KColors.splashBgStart, KColors.splashBgEnd, _bgAnim.value)!, Color.lerp(KColors.splashBgEnd, KColors.splashBgAlt, _bgAnim.value)!]
+                      : [Color.lerp(KColors.splashBgLightStart, KColors.splashBgLightMid, _bgAnim.value)!, Color.lerp(KColors.splashBgLightEnd, KColors.splashBgLightStart, _bgAnim.value)!],
+                ),
               ),
-            ),
-            child: child,
-          );
-        },
-        child: SafeArea(
-          child: Stack(
-            children: [
-              // --- Decorative background blobs ---
-              Positioned(top: -80, right: -60, child: _Blob(size: 260, color: theme.colorScheme.primary.withOpacity(0.08))),
-              Positioned(bottom: -100, left: -80, child: _Blob(size: 300, color: theme.colorScheme.primary.withOpacity(0.06))),
+              child: child,
+            );
+          },
+          child: SafeArea(
+            child: Stack(
+              children: [
+                // --- Decorative background blobs ---
+                Positioned(top: -80, right: -60, child: _Blob(size: 260, color: theme.colorScheme.primary.changeOpacity(0.08))),
+                Positioned(bottom: -100, left: -80, child: _Blob(size: 300, color: theme.colorScheme.primary.changeOpacity(0.06))),
 
-              // --- Main content ---
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // Logo
-                    ScaleTransition(
-                      scale: _logoScale,
-                      child: FadeTransition(
-                        opacity: _logoOpacity,
-                        child: _LogoBadge(theme: theme),
-                      ),
-                    ),
-
-                    const SizedBox(height: 32),
-
-                    // App name
-                    FadeTransition(
-                      opacity: _textOpacity,
-                      child: SlideTransition(
-                        position: _textSlide,
-                        child: Column(
-                          children: [
-                            Text(
-                              'YourApp',
-                              style: theme.textTheme.h1.copyWith(fontSize: 36, fontWeight: FontWeight.w800, letterSpacing: -1.2, color: theme.colorScheme.foreground),
-                            ),
-                            const SizedBox(height: 8),
-                            FadeTransition(
-                              opacity: _subtitleOpacity,
-                              child: Text('Built with ♥ using Flutter', style: theme.textTheme.muted.copyWith(fontSize: 14, letterSpacing: 0.2)),
-                            ),
-                          ],
+                // --- Main content ---
+                Center(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // Logo
+                      ScaleTransition(
+                        scale: _logoScale,
+                        child: FadeTransition(
+                          opacity: _logoOpacity,
+                          child: _LogoBadge(theme: theme),
                         ),
                       ),
-                    ),
-                  ],
-                ),
-              ),
 
-              // --- Loading dots at bottom ---
-              Positioned(
-                bottom: 60,
-                left: 0,
-                right: 0,
-                child: FadeTransition(
-                  opacity: _textOpacity,
-                  child: Center(child: _AnimatedDots(controller: _dotsController)),
+                      const SizedBox(height: 32),
+
+                      // App name
+                      FadeTransition(
+                        opacity: _textOpacity,
+                        child: SlideTransition(
+                          position: _textSlide,
+                          child: Column(
+                            children: [
+                              Text(
+                                'Real Time Chat',
+                                style: theme.textTheme.h1.copyWith(fontSize: 36, fontWeight: .w800, letterSpacing: -1.2, color: theme.colorScheme.foreground),
+                              ),
+                              const SizedBox(height: 8),
+                              FadeTransition(
+                                opacity: _subtitleOpacity,
+                                child: Text('Built with ♥ using Flutter', style: theme.textTheme.muted.copyWith(fontSize: 14, letterSpacing: 0.2)),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
+
+                // --- Loading dots at bottom ---
+                Positioned(
+                  bottom: 60,
+                  left: 0,
+                  right: 0,
+                  child: FadeTransition(
+                    opacity: _textOpacity,
+                    child: Center(child: _AnimatedDots(controller: _dotsController)),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -175,14 +180,15 @@ class _LogoBadge extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(24),
         color: theme.colorScheme.primary,
-        boxShadow: [BoxShadow(color: theme.colorScheme.primary.withOpacity(0.35), blurRadius: 32, spreadRadius: 4, offset: const Offset(0, 8))],
+        boxShadow: [BoxShadow(color: theme.colorScheme.primary.changeOpacity(0.35), blurRadius: 32, spreadRadius: 4, offset: const Offset(0, 8))],
       ),
       child: Center(
-        child: Icon(
-          Icons.bolt_rounded, // 🔁 Replace with your own logo/icon
-          size: 52,
-          color: theme.colorScheme.primaryForeground,
-        ),
+        child: Image.asset('assets/images/splash_logo.png', width: 52, height: 52),
+        // Icon(
+        //   Icons.bolt_rounded, // 🔁 Replace with your own logo/icon
+        //   size: 52,
+        //   color: theme.colorScheme.primaryForeground,
+        // ),
       ),
     );
   }
@@ -212,7 +218,7 @@ class _AnimatedDots extends StatelessWidget {
               margin: const EdgeInsets.symmetric(horizontal: 4),
               width: 7,
               height: 7,
-              decoration: BoxDecoration(shape: BoxShape.circle, color: theme.colorScheme.primary.withOpacity(opacity)),
+              decoration: BoxDecoration(shape: BoxShape.circle, color: theme.colorScheme.primary.changeOpacity(opacity)),
             );
           }),
         );

@@ -7,17 +7,9 @@ class DarkSystemUiOverlayStyle extends AnnotatedRegion<SystemUiOverlayStyle> {
 
   static const style = SystemUiOverlayStyle(
     statusBarBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
-    statusBarColor: KColors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: KColors.bg,
-  );
-
-  static const style2 = SystemUiOverlayStyle(
-    statusBarBrightness: Brightness.light,
     statusBarIconBrightness: Brightness.light,
     statusBarColor: KColors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
+    systemNavigationBarIconBrightness: Brightness.light,
     systemNavigationBarColor: KColors.bg,
   );
 }
@@ -27,10 +19,10 @@ class SplashSystemUiOverlayStyle extends AnnotatedRegion<SystemUiOverlayStyle> {
 
   static const style = SystemUiOverlayStyle(
     statusBarBrightness: Brightness.light,
-    statusBarIconBrightness: Brightness.dark,
+    statusBarIconBrightness: Brightness.light,
     statusBarColor: KColors.transparent,
-    systemNavigationBarIconBrightness: Brightness.dark,
-    systemNavigationBarColor: KColors.bg,
+    systemNavigationBarIconBrightness: Brightness.light,
+    systemNavigationBarColor: KColors.splashBgEnd,
     systemNavigationBarDividerColor: KColors.transparent,
   );
 }

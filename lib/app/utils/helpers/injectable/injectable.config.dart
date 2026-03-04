@@ -13,7 +13,11 @@ import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:real_time_chat/app/controllers/app_controller.dart' as _i475;
 import 'package:real_time_chat/app/controllers/auth_controller.dart' as _i719;
-import 'package:real_time_chat/app/services/auth_service.dart' as _i146;
+import 'package:real_time_chat/app/controllers/chat_controller.dart' as _i317;
+import 'package:real_time_chat/app/controllers/nav_bar_controller.dart'
+    as _i304;
+import 'package:real_time_chat/app/data/services/auth_service.dart' as _i1071;
+import 'package:real_time_chat/app/data/services/chat_service.dart' as _i548;
 import 'package:real_time_chat/app/utils/helpers/injectable/module.dart'
     as _i1070;
 import 'package:shared_preferences/shared_preferences.dart' as _i460;
@@ -32,7 +36,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i475.AppController>(() => _i475.AppController());
     gh.lazySingleton<_i719.AuthController>(() => _i719.AuthController());
-    gh.lazySingleton<_i146.AuthService>(() => _i146.AuthService());
+    gh.lazySingleton<_i317.ChatController>(() => _i317.ChatController());
+    gh.lazySingleton<_i304.NavBarController>(() => _i304.NavBarController());
+    gh.lazySingleton<_i1071.AuthService>(() => _i1071.AuthService());
+    gh.lazySingleton<_i548.ChatService>(() => _i548.ChatService());
     return this;
   }
 }
