@@ -131,7 +131,7 @@ class _SplashScreenState extends State<SplashScreen> with TickerProviderStateMix
                             children: [
                               Text(
                                 'Real Time Chat',
-                                style: theme.textTheme.h1.copyWith(fontSize: 36, fontWeight: .w800, letterSpacing: -1.2, color: theme.colorScheme.foreground),
+                                style: theme.textTheme.h1.copyWith(fontSize: 36, fontWeight: FontWeight.w800, letterSpacing: -1.2, color: theme.colorScheme.foreground),
                               ),
                               const SizedBox(height: 8),
                               FadeTransition(

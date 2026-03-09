@@ -50,24 +50,24 @@ class AppScaffold extends StatelessWidget {
             if (showAppBar)
               Container(
                 height: 70 + MediaQuery.of(context).padding.top,
-                width: .infinity,
+                width: double.infinity,
                 color: appBarColor ?? Colors.transparent,
                 child: Stack(
                   children: [
                     Align(
-                      alignment: .bottomCenter,
+                      alignment: Alignment.bottomCenter,
                       child: Padding(
-                        padding: const .symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         child:
                             titleWidget ??
                             Row(
                               spacing: 10,
-                              mainAxisAlignment: title == null ? .spaceBetween : .center,
+                              mainAxisAlignment: title == null ? MainAxisAlignment.spaceBetween : MainAxisAlignment.center,
                               children: [
                                 if (showBackBtn) CommonBackButton(onTapBackBtn: () => (onTapBackBtn ?? Get.back)()) else const SizedBox(height: 45, width: 45),
                                 if (title != null)
                                   Expanded(
-                                    child: Text(title!, style: style.h3, textAlign: .center),
+                                    child: Text(title!, style: style.h3, textAlign: TextAlign.center),
                                   ),
                                 SizedBox(height: 45, width: 45, child: action),
                               ],
@@ -79,7 +79,7 @@ class AppScaffold extends StatelessWidget {
               ),
             if (showDivider)
               Align(
-                alignment: .bottomCenter,
+                alignment: Alignment.bottomCenter,
                 child: Divider(height: 1, color: ShadTheme.of(context).colorScheme.border),
               ),
 

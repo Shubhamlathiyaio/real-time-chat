@@ -11,7 +11,7 @@ class AppController extends GetxController {
     Future.delayed(const Duration(seconds: 2), () {
       final session = Supabase.instance.client.auth.currentSession;
       if (session != null) {
-        Get.offAllNamed(AppRoutes.base);
+        Get.offAllNamed(AppRoutes.chat);
       } else {
         Get.offAllNamed(AppRoutes.login);
       }

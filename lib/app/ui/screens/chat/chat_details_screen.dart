@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/controllers/chat_details_controller.dart';
 import 'package:real_time_chat/app/data/models/message.dart';
+import 'package:real_time_chat/app/utils/helpers/extensions/context.dart';
 import 'package:real_time_chat/app/utils/theme/app_colors.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -159,7 +160,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
           Container(
             width: 72,
             height: 72,
-            decoration: BoxDecoration(shape: BoxShape.circle, color: avatarColor.withOpacity(0.12)),
+            decoration: BoxDecoration(shape: BoxShape.circle, color: avatarColor.changeOpacity(0.12)),
             child: Center(
               child: Text(
                 _getInitials(name),
@@ -227,7 +228,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
             color: KColors.surfaceLight,
             shape: BoxShape.circle,
             border: Border.all(color: KColors.borderAlt, width: 1),
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.3), blurRadius: 8, offset: const Offset(0, 3))],
+            boxShadow: [BoxShadow(color: Colors.black.changeOpacity(0.3), blurRadius: 8, offset: const Offset(0, 3))],
           ),
           child: const Icon(Icons.keyboard_arrow_down_rounded, color: KColors.muted, size: 20),
         ),
@@ -346,7 +347,7 @@ class ChatDetailsScreen extends GetView<ChatDetailsController> {
         onCopy: () {
           Clipboard.setData(ClipboardData(text: msg.text));
           Get.back();
-          Get.snackbar('Copied', 'Copied to clipboard', snackPosition: SnackPosition.BOTTOM, backgroundColor: KColors.surfaceLight, colorText: Colors.white);
+          Get.snackbar('Copied', 'Copied to clipboard', snackPosition: .BOTTOM, backgroundColor: KColors.surfaceLight, colorText: Colors.white);
         },
       ),
       backgroundColor: Colors.transparent,
@@ -425,7 +426,7 @@ class _MessageBubble extends StatelessWidget {
                         bottomLeft: Radius.circular(isMe ? 18 : 4),
                         bottomRight: Radius.circular(isMe ? 4 : 18),
                       ),
-                      boxShadow: [BoxShadow(color: isMe ? KColors.primary.withOpacity(0.2) : Colors.black.withOpacity(0.15), blurRadius: 8, offset: const Offset(0, 2))],
+                      boxShadow: [BoxShadow(color: isMe ? KColors.primary.changeOpacity(0.2) : Colors.black.changeOpacity(0.15), blurRadius: 8, offset: const Offset(0, 2))],
                     ),
                     child: Text(message.text, style: TextStyle(color: isMe ? Colors.white : const Color(0xFFE0E0F0), fontSize: 15, height: 1.4)),
                   ),
@@ -506,7 +507,7 @@ class _SendButton extends StatelessWidget {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           gradient: const LinearGradient(colors: [KColors.primary, KColors.secondary], begin: Alignment.topLeft, end: Alignment.bottomRight),
-          boxShadow: [BoxShadow(color: KColors.primary.withOpacity(0.4), blurRadius: 12, offset: const Offset(0, 3))],
+          boxShadow: [BoxShadow(color: KColors.primary.changeOpacity(0.4), blurRadius: 12, offset: const Offset(0, 3))],
         ),
         child: isSending
             ? const Center(

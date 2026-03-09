@@ -5,22 +5,15 @@ import 'package:real_time_chat/app/data/models/chat_contact.dart';
 import 'package:real_time_chat/app/data/services/chat_service.dart';
 import 'package:real_time_chat/app/routes/app_routes.dart';
 import 'package:real_time_chat/app/ui/widgets/app_scaffold.dart';
-import 'package:real_time_chat/app/utils/helpers/getItHook/getit_hook.dart';
 import 'package:real_time_chat/app/utils/helpers/injectable/injectable.dart';
 import 'package:real_time_chat/app/utils/theme/app_colors.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
 
 import 'widgets/chat_tile.dart';
-import 'widgets/story_avatar.dart';
 
-class ChatScreen extends StatefulWidget {
+class ChatScreen extends StatelessWidget {
   const ChatScreen({super.key});
 
-  @override
-  State<ChatScreen> createState() => _ChatScreenState();
-}
-
-class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
   @override
   Widget build(BuildContext context) {
     final theme = ShadTheme.of(context);
@@ -31,18 +24,11 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
       body: (context) => SafeArea(
         child: Column(
           children: [
-            // _buildSearchBar(theme),
             SearchBar(),
-            _buildStoriesRow(theme),
-            _buildSectionHeader(theme),
-            Expanded(
-              child: ChatList(),
-              // _buildChatList(theme)
-            ),
+            Expanded(child: ChatList()),
           ],
         ),
       ),
-      // bottomNavigationBar: _buildBottomNav(theme),
       floatingActionButton: _buildFAB(theme),
     );
   }
@@ -72,48 +58,8 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
   }
 
   Widget _buildMyAvatar() {
-    final popoverCtrl = ShadPopoverController();
-    return
-    // SizedBox(
-    //   width: 44,
-    //   height: 44,
-    //   child: ShadPopover(
-    //     controller: popoverCtrl,
-    //     child: ShadButton.outline(child: Text("Click me! 📌")),
-    //     popover: (context) => Padding(
-    //       padding: const EdgeInsets.all(16),
-    //       child: Column(
-    //         mainAxisSize: .min,
-    //         crossAxisAlignment: CrossAxisAlignment.start,
-    //         children: [
-    //           Text("Hello! 👋", style: ShadTheme.of(context).textTheme.h4),
-    //           const SizedBox(height: 8),
-    //           Text("This is your popover content."),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
-    ShadPopover(
-      controller: popoverCtrl,
-
-      popover: (context) => Container(
-        padding: const EdgeInsets.all(12),
-        child: Column(
-          mainAxisSize: .min,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Profile Settings', style: ShadTheme.of(context).textTheme.large),
-            const SizedBox(height: 8),
-            ShadButton.ghost(
-              onPressed: () {
-                // controller.logout();
-              },
-              child: const Row(children: [Icon(Icons.logout, size: 16), SizedBox(width: 8), Text('Logout')]),
-            ),
-          ],
-        ),
-      ),
+    return GestureDetector(
+      onTap: () => Get.toNamed(AppRoutes.profile),
       child: Stack(
         children: [
           Container(
@@ -149,72 +95,6 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
     );
   }
 
-  // ── Stories Row ──────────────────────────────
-  Widget _buildStoriesRow(ShadThemeData theme) {
-    return SizedBox(
-      height: 100,
-      child: ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        scrollDirection: Axis.horizontal,
-        itemCount: storiesData.length + 1,
-        itemBuilder: (context, i) {
-          if (i == 0) return _buildAddStory();
-          final s = storiesData[i - 1];
-          return StoryAvatar(contact: s);
-        },
-      ),
-    );
-  }
-
-  Widget _buildAddStory() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 4),
-      child: Column(
-        children: [
-          Container(
-            width: 58,
-            height: 58,
-            decoration: BoxDecoration(
-              shape: BoxShape.circle,
-              color: KColors.surfaceLight,
-              border: Border.all(color: KColors.borderAlt, width: 1.5),
-            ),
-            child: const Icon(Icons.add_rounded, color: KColors.primary, size: 26),
-          ),
-          const SizedBox(height: 6),
-          const Text(
-            'Add',
-            style: TextStyle(color: KColors.muted, fontSize: 11, fontWeight: FontWeight.w500),
-          ),
-        ],
-      ),
-    );
-  }
-
-  // ── Section Header ───────────────────────────
-  Widget _buildSectionHeader(ShadThemeData theme) {
-    return Padding(
-      padding: const EdgeInsets.fromLTRB(20, 8, 20, 4),
-      child: Row(
-        children: [
-          Text(
-            'Recent',
-            style: theme.textTheme.small.copyWith(color: KColors.muted, fontWeight: FontWeight.w600, letterSpacing: 0.6, fontSize: 12),
-          ),
-          const Spacer(),
-          ShadButton.ghost(
-            onPressed: () => Get.toNamed(AppRoutes.users),
-            size: ShadButtonSize.sm,
-            child: const Text(
-              'See all',
-              style: TextStyle(color: KColors.primary, fontSize: 12, fontWeight: FontWeight.w600),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
   // ── FAB ──────────────────────────────────────
   Widget _buildFAB(ShadThemeData theme) {
     return Container(
@@ -235,9 +115,6 @@ class _ChatScreenState extends GetItHookState<ChatController, ChatScreen> {
       ),
     );
   }
-
-  @override
-  bool get autoDispose => true;
 }
 
 class SearchBar extends StatelessWidget {

@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
     setState(() => _isLoading = false);
 
     if (user != null) {
-      Get.offAllNamed(AppRoutes.base);
+      Get.offAllNamed(AppRoutes.chat);
     } else {
       setState(() => _error = 'Invalid credentials. Please try again.');
     }

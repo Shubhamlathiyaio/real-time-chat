@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:real_time_chat/app/data/services/chat_service.dart';
 import 'package:real_time_chat/app/routes/app_routes.dart';
+import 'package:real_time_chat/app/utils/helpers/extensions/context.dart';
 import 'package:real_time_chat/app/utils/helpers/injectable/injectable.dart';
 import 'package:real_time_chat/app/utils/theme/app_colors.dart';
 import 'package:shadcn_ui/shadcn_ui.dart';
@@ -104,7 +105,7 @@ class _UserTile extends StatelessWidget {
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
       leading: CircleAvatar(
         radius: 24,
-        backgroundColor: KColors.primary.withOpacity(0.1),
+        backgroundColor: KColors.primary.changeOpacity(0.1),
         backgroundImage: user['avatar_url'] != null ? NetworkImage(user['avatar_url']) : null,
         child: user['avatar_url'] == null
             ? Text(
